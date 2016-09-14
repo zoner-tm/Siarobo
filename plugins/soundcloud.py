@@ -36,7 +36,7 @@ async def run(message, matches, chat_id, step):
     from_id = message['from']['id']
     if step == 0:
         await sender(
-            Message(chat_id).set_text("*Please Wait*\nI'm Searching all Music with this name", parse_mode="markdown"))
+            Message(chat_id).set_text("*Please Wait*\n_I'm Searching all Music with this name_", parse_mode="markdown"))
         user_steps[from_id] = {"name": "Soundcloud", "step": 1, "data": {}}
         i = 0
         show_keyboard = {'keyboard': [], "selective": True}
@@ -59,14 +59,14 @@ async def run(message, matches, chat_id, step):
     elif step == 1:
         try:
             hide_keyboard = {'hide_keyboard': True, "selective": True}
-            await sender(Message(chat_id).set_text("*Please Wait*\nLet me Save this Music For You",
+            await sender(Message(chat_id).set_text("*Please Wait*\n_Let me Save this Music For You_",
                                                    reply_to_message_id=message['message_id'],
                                                    reply_markup=hide_keyboard, parse_mode="markdown"))
             await downloader(await getfile(user_steps[from_id]['data'][message['text']]),
                              "tmp/{}.mp3".format(message['text']))
             del user_steps[from_id]
             return [Message(chat_id).set_audio("tmp/{}.mp3".format(message['text']), title=message['text'],
-                                               performer="@Siarobot")]
+                                               performer="@SrcMusicBot")]
         except Exception as e:
             del user_steps[from_id]
             return [Message(chat_id).set_text("*Wrong Input*\n_Try Again_", parse_mode="markdown")]
@@ -76,8 +76,8 @@ plugin = {
     "name": "Soundcloud",
     "desc": "Download a Music From Sound Cloud\n\n"
             "*For Start :*\n`/sc michael jackson billie jean`",
-    "usage": ["/sc \\[`Search`]"],
+    "usage": ["/Music \\[`Search`]"],
     "run": run,
     "sudo": False,
-    "patterns": ["^[/!#]sc (.*)$"]
+    "patterns": ["^[/]music (.*)$"]
 }
