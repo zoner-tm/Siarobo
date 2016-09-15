@@ -5,7 +5,7 @@ from message import Message
 @asyncio.coroutine
 def run(message, matches, chat_id, step):
     return [Message(chat_id).set_text(
-        "Hi :-) \n*Bot Search Music!*\n_✔Fast and accurate✔", parse_mode="markdown")]
+        "Hi :-) \n*Bot Search Music!*\n✔Fast and accurate✔\n\n_/music <Artistname>_", parse_mode="markdown")]
 
 
 plugin = {
